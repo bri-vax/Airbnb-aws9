@@ -33,6 +33,12 @@ gem 'jbuilder', '~> 2.5'
 #boostrap
 gem 'bootstrap-sass'
 
+#devise accont
+gem 'devise'
+gem 'devise-i18n'
+
+gem 'jquery-rails'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
