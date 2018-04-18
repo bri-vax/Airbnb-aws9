@@ -36,9 +36,11 @@ gem 'bootstrap-sass'
 #devise accont
 gem 'devise'
 gem 'devise-i18n'
+gem 'rails-i18n'
 
 gem 'jquery-rails'
 gem "paperclip"
+gem 'toastr-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
