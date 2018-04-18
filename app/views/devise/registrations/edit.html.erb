@@ -14,7 +14,7 @@
      <div class="panel-body">
        <div class="container">
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-            <%= render 'shared/devise_error' %>
+            <%= render 'shared/devise_errors' %>
               <div class="form-group">
                        <%= f.text_field :fullname, autofocus: true, class: "form-control", placeholder: "Nom complet ( Prénom + Nom)" %>
               </div>
