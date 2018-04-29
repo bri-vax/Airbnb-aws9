@@ -2,6 +2,7 @@ class RoomsController < ApplicationController
    
   before_action :set_room , only: [:show , :edit, :update]
   before_action :authenticate_user!, except: [:show]
+  before_action :require_same_user , only: [:edit , :update]
   
    def index
        @rooms = current_user.rooms
@@ -14,23 +15,35 @@ class RoomsController < ApplicationController
    def create
         @room = current_user.rooms.build(room_params)
         if @room.save
-            redirect_to @room, notice:"votre annonce a été ajouté avec succès"
+            if params[:images]
+                params[:images].each do |i|
+                    @room.photos.create(image: i)
+                end
+            end
+            @photos = @rooms.photos
+            redirect_to edit_room_path(@rooms), notice:"votre annonce a été ajouté avec succès"
         else
             render :new
         end
    end
    
    def show
-       
+       @photos = @room.photos
    end
    
      def edit
-          
+        @photos = @room.photos
    end
    
     def update
      if @room.update(room_params)
-        redirect_to @room, notice:"votre annonce a été modifié avec succès"
+          if params[:images]
+                params[:images].each do |i|
+                    @room.photos.create(image: i)
+                end
+            end
+            @photos = @rooms.photos
+        redirect_to edit_room_path(@room), notice:"votre annonce a été modifié avec succès"
      else
          render :edit
      end
@@ -38,6 +51,13 @@ class RoomsController < ApplicationController
    
    
   private
+  def require_same_user
+     if current_user.id != @room.user.id
+         flash[:danger] = "Vous n'êtes pas propriétaire de cette annonce"
+         redirect_to root_path
+     end
+  end
+  
   def set_room
       @room = Room.find(params[:id]) 
   end
